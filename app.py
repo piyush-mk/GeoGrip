@@ -122,3 +122,34 @@ if want_adv:
 option1_text = "Use an example image"
 option2_text = "Upload a custom image for analysis"
 option = st.radio("Choose a method to load an image:", [option1_text, option2_text])
+
+if option == option1_text:
+    working_dir = os.path.join(os.getcwd(), "test_images")
+    test_images = natsorted(
+        [
+            f
+            for f in os.listdir(working_dir)
+            if os.path.isfile(os.path.join(working_dir, f))
+        ]
+    )
+    test_image = st.selectbox("Please select a test image:", test_images)
+
+    if st.button("Analyze!"):
+        file_path = os.path.join(working_dir, test_image)
+        img = skimage.io.imread(file_path)
+        img = resize(img, (256, 256))
+
+        predict(img, file_path, want_adv)
+else:
+    image_file = st.file_uploader("Upload Image", type=["png", "jpeg", "jpg"])
+    if st.button("Analyze!"):
+        if image_file is not None:
+            file_details = {
+                "Filename": image_file.name,
+                "FileType": image_file.type,
+                "FileSize": image_file.size,
+            }
+            base_img = load_image(image_file)
+            img = base_img.resize((256, 256))
+            img = img.convert("RGB")
+            predict(img, img, want_adv)
