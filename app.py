@@ -16,3 +16,7 @@ from natsort import natsorted
 from skimage import io
 from skimage.transform import resize
 
+if platform.system() == "Windows":
+    print("on Windows OS - adjusting PosixPath")
+    temp = pathlib.PosixPath
+    pathlib.PosixPath = pathlib.WindowsPath
