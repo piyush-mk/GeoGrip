@@ -115,3 +115,10 @@ def predict(img, img_flex, use_best_model=False):
             )
         )
 
+
+want_adv = st.checkbox("Use Advanced model (slower)")
+if want_adv:
+    st.markdown("*analyzing with advanced model*")
+option1_text = "Use an example image"
+option2_text = "Upload a custom image for analysis"
+option = st.radio("Choose a method to load an image:", [option1_text, option2_text])
