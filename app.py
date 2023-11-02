@@ -76,3 +76,8 @@ with st.beta_container():
         "The following images were not used for model training"
     )
 
+
+@st.cache
+def load_image(image_file):
+    img = Image.open(image_file)
+    return img
