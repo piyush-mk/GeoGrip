@@ -51,3 +51,12 @@ def load_mixnet_model():
 
     return model
 
+
+supplemental_dir = os.path.join(os.getcwd(), "info")
+fp_header = os.path.join(supplemental_dir, "climb_area_examples.png")
+
+st.title("GeoGrip: A satellite rock climbing spot detection app")
+st.markdown(
+    "by Piyush Mohapatra | [GitHub](https://github.com/piyush-mk)"
+)
+
