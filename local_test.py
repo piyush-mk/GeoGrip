@@ -29,3 +29,18 @@ def load_best_model():
 
     return best_model
 
+
+def load_mixnet_model():
+    try:
+        path_to_model = r"model-mixnetXL-20epoch_u.pil"
+        model = load_learner(path_to_model, cpu=True)
+    except:
+        print("unable to load locally. downloading model file")
+        model_backup = (
+            "https://www.dropbox.com/scl/fi/48ez7tzm1q7h4o5njn0q8/model-mixnetXL-20epoch.pkl?dl=1"
+        )
+        model_response = requests.get(model_backup)
+        model = load_learner(BytesIO(model_response.content), cpu=True)
+
+    return model
+
