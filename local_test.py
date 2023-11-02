@@ -47,7 +47,6 @@ def load_mixnet_model():
 
 def load_dir_files(directory, req_extension=".txt", return_type="list", verbose=False):
     appr_files = []
-    # r=root, d=directories, f = files
     for r, d, f in os.walk(directory):
         for prefile in f:
             if prefile.endswith(req_extension):
@@ -75,3 +74,39 @@ def load_dir_files(directory, req_extension=".txt", return_type="list", verbose=
             appr_file_dict[basename(this_file)] = this_file
 
         return appr_file_dict
+
+
+def predict(
+    img,
+    img_flex,
+    model_pred,
+    print_model=True,
+    show_image=True,
+):
+    if show_image:
+        img.show(title="Image to be predicted")
+    # Load model and make prediction
+
+    if not isinstance(img_flex, str):
+        # convert image to fast AI PIL object
+        fancy_class = PILImage(img_flex)
+        model_pred.precompute = False
+        pred_class, pred_items, pred_prob = model_pred.predict(fancy_class)
+    else:
+        pred_class, pred_items, pred_prob = model_pred.predict(img_flex)
+    if print_model:
+        print(model_pred.model)
+
+    prob_np = pred_prob.numpy()
+    if str(pred_class) == "climb_area":
+        print(
+            "Area in test image is good for climbing! {}% confident.".format(
+                round(100 * prob_np[0], 2)
+            )
+        )
+    else:
+        print(
+            "Area in test image NOT great for climbing: {}% confident.".format(
+                100 - round(100 * prob_np[0], 2)
+            )
+        )
