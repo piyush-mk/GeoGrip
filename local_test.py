@@ -5,7 +5,7 @@ import shutil
 from io import BytesIO
 from os.path import basename, join
 
-from fastai.vision.all import *
+from fastai.vision.all import PILImage, load_learner, load_image, platform, requests
 import timm
 from natsort import natsorted
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     working_dir = os.path.join(main_dir, "test_images")
     test_image_files = load_dir_files(working_dir, req_extension=".png", verbose=True)
     spacer = "\n\n"
-    use_best_model = False
+    use_best_model = False  # takes a bit longer to load because it needs to be unzipped
     if use_best_model:
         model = load_best_model()
     else:
