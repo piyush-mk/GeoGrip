@@ -110,3 +110,35 @@ def predict(
                 100 - round(100 * prob_np[0], 2)
             )
         )
+
+
+if __name__ == "__main__":
+    best_model_name = "model-resnetv2_50x1_bigtransfer.pkl"
+    main_dir = os.getcwd()
+    # Read the image
+    working_dir = os.path.join(main_dir, "test_images")
+    test_image_files = load_dir_files(working_dir, req_extension=".png", verbose=True)
+    spacer = "\n\n"
+    use_best_model = False
+    if use_best_model:
+        model = load_best_model()
+    else:
+        model = load_mixnet_model()
+
+    for image_path in test_image_files:
+        img = load_image(image_path)
+        img = img.resize((256, 256))
+        img = img.convert("RGB")
+        # Predict and display the image
+        print(spacer)
+        this_img = os.path.basename(image_path)
+        print("Predicting images for test image {}".format(this_img))
+        predict(img, image_path, model, print_model=False, show_image=False)
+
+    if os.path.exists(join(main_dir, best_model_name)):
+        os.remove(join(main_dir, best_model_name))
+        print(
+            "Removed the unpacked .pkl model file {} from {}".format(
+                best_model_name, main_dir
+            )
+        )
