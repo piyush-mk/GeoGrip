@@ -60,3 +60,19 @@ st.markdown(
     "by Piyush Mohapatra | [GitHub](https://github.com/piyush-mk)"
 )
 
+
+with st.beta_container():
+    st.markdown(
+        "*Welcome to our app that evaluates satellite or aerial images of the selected terrain and "
+        "and determines its suitability for outdoor bouldering.*"
+    )
+st.markdown("---")
+st.markdown("**Examples of Images in the *climb area* class**")
+st.image(skimage.io.imread(fp_header))
+st.markdown("---")
+with st.beta_container():
+    st.subheader("Test sattelite images")
+    st.markdown(
+        "The following images were not used for model training"
+    )
+
