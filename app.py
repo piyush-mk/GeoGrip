@@ -153,3 +153,10 @@ else:
             img = base_img.resize((256, 256))
             img = img.convert("RGB")
             predict(img, img, want_adv)
+st.markdown("---")
+st.subheader("How it Works:")
+st.markdown(
+    "**GeoGrip** uses Convolutional Neural Network (CNN) trained on a labeled dataset ("
+    "approx. 3000 satellite images, each 256x256 in two classes) with two classes. More "
+    "specifically, the primary model is MixNet-XL"
+)
