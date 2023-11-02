@@ -81,3 +81,37 @@ with st.beta_container():
 def load_image(image_file):
     img = Image.open(image_file)
     return img
+
+
+def predict(img, img_flex, use_best_model=False):
+    st.image(img, caption="Image chosen to analyze", use_column_width=True)
+
+    if use_best_model:
+        model_pred = load_best_model()
+    else:
+        model_pred = load_mixnet_model()
+
+    with st.spinner("model inference running..."):
+        time.sleep(3)
+        if not isinstance(img_flex, str):
+            fancy_class = PILImage(img_flex)
+            model_pred.precompute = False
+            pred_class, pred_items, pred_prob = model_pred.predict(fancy_class)
+        else:
+            pred_class, pred_items, pred_prob = model_pred.predict(img_flex)
+        prob_np = pred_prob.numpy()
+
+    if str(pred_class) == "climb_area":
+        st.balloons()
+        st.subheader(
+            "Area in test image is good for climbing! {}% confident.".format(
+                round(100 * prob_np[0], 2)
+            )
+        )
+    else:
+        st.subheader(
+            "Area in test image not great for climbing :/ - {}% confident.".format(
+                100 - round(100 * prob_np[0], 2)
+            )
+        )
+
