@@ -25,7 +25,7 @@ if platform.system() == "Windows":
 def load_best_model():
     try:
         path_to_archive = r"model-resnetv2_50x1_bigtransfer_u.zip"
-        best_model_name = "model-resnetv2_50x1_bigtransfer.pkl"
+        best_model_name = "model-2ebjfku7r.pkl"
         shutil.unpack_archive(path_to_archive)
         best_model = load_learner(join(os.getcwd(), best_model_name), cpu=True)
     except:
@@ -58,6 +58,10 @@ fp_header = os.path.join(supplemental_dir, "climb_area_examples.png")
 st.title("GeoGrip: A satellite rock climbing spot detection app")
 st.markdown(
     "by Piyush Mohapatra | [GitHub](https://github.com/piyush-mk)"
+)
+
+st.markdown(
+    "and Kunal"
 )
 
 
